@@ -50,8 +50,32 @@ public class Evento {
         this.descricao = novoDescricao;
     }
 
-    public void alterarStatus(StatusEvento novoStatus) {
-        this.status = Objects.requireNonNull(novoStatus);
+    public void abrirParaVendas() {
+        this.status = Objects.requireNonNull(StatusEvento.ABERTO_PARA_VENDAS);
+    }
+
+    public void esgotar() {
+        if (status != StatusEvento.ABERTO_PARA_VENDAS) {
+            throw new IllegalStateException("Somente eventos abertos podem ser esgotados.");
+        }
+        this.status = StatusEvento.ESGOTADO;
+    }
+
+    public void finalizar() {
+        if (status == StatusEvento.CANCELADO) {
+            throw new IllegalStateException("Evento cancelado não pode ser finalizado.");
+        }
+        if (dataRealizacao.isAfter(LocalDateTime.now())) {
+            throw new IllegalStateException("Evento só pode ser finalizado após a data.");
+        }
+        this.status = StatusEvento.FINALIZADO;
+    }
+
+    public void cancelar() {
+        if (status == StatusEvento.FINALIZADO) {
+            throw new IllegalStateException("Evento já finalizado não pode ser cancelado.");
+        }
+        this.status = StatusEvento.CANCELADO;
     }
 
 
