@@ -86,9 +86,7 @@ public class Local {
     }
 
     public int getCapacidadeTotal() {
-        return setores.stream()
-                .mapToInt(Setor::getCapacidade)
-                .sum();
+        return setores.stream().mapToInt(Setor::getCapacidade).sum();
     }
 
     @Override
