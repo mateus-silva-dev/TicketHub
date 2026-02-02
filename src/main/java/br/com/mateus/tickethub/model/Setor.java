@@ -91,6 +91,10 @@ public class Setor {
         return precoBase;
     }
 
+    public boolean temCapacidade(long quantidadeVendida) {
+        return quantidadeVendida < this.capacidade;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (!(o instanceof Setor setor)) return false;
