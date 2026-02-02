@@ -1,7 +1,6 @@
-package br.com.mateus.tickethub.model;
+package br.com.mateus.tickethub.domain.local;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -40,7 +39,7 @@ public class Setor {
     }
 
 
-    protected void validarNome(String nome) {
+    private void validarNome(String nome) {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if ( nome.trim().length() < 3 ) {
@@ -52,7 +51,7 @@ public class Setor {
         }
     }
 
-    protected void validarCapacidade(int capacidade) {
+    private void validarCapacidade(int capacidade) {
         if ( capacidade <= 0 ) {
             throw new IllegalArgumentException("O capacidade deve ser maior que 1.");
         }
@@ -62,7 +61,7 @@ public class Setor {
         }
     }
 
-    protected void validarPrecoBase(BigDecimal precoBase) {
+    private void validarPrecoBase(BigDecimal precoBase) {
         Objects.requireNonNull(precoBase, "O preço base não pode ser nulo.");
 
         if (precoBase.compareTo(BigDecimal.ZERO) <= 0) {

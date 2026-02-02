@@ -1,7 +1,9 @@
-package br.com.mateus.tickethub.model;
+package br.com.mateus.tickethub.domain.ingresso;
 
-import br.com.mateus.tickethub.model.enums.StatusEvento;
-import br.com.mateus.tickethub.model.enums.StatusIngresso;
+import br.com.mateus.tickethub.domain.evento.Evento;
+import br.com.mateus.tickethub.domain.local.Setor;
+import br.com.mateus.tickethub.domain.usuario.Usuario;
+import br.com.mateus.tickethub.domain.evento.StatusEvento;
 
 import java.math.BigDecimal;
 import java.util.Objects;

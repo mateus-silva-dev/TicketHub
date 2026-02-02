@@ -1,4 +1,4 @@
-package br.com.mateus.tickethub.model;
+package br.com.mateus.tickethub.infrastructure.shared.endereco;
 
 import java.util.Objects;
 

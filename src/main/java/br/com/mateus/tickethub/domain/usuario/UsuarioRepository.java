@@ -1,6 +1,4 @@
-package br.com.mateus.tickethub.repository;
-
-import br.com.mateus.tickethub.model.Usuario;
+package br.com.mateus.tickethub.domain.usuario;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,5 +9,4 @@ public interface UsuarioRepository {
     Optional<Usuario> buscarPorId(UUID id);
     Optional<Usuario> buscarPorEmail(String email);
     List<Usuario> buscarTodos();
-    void deletar(UUID id);
 }

@@ -1,4 +1,6 @@
-package br.com.mateus.tickethub.model;
+package br.com.mateus.tickethub.domain.usuario;
+
+import br.com.mateus.tickethub.domain.usuario.exception.EmailJaCadastradoException;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -10,6 +12,7 @@ public class Usuario {
     private String email;
     private String senha;
     private boolean admin;
+    private boolean ativo;
 
 
     public Usuario(String nome, String email, String senha, boolean admin) {
@@ -22,15 +25,18 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.admin = admin;
+        this.ativo = true;
     }
 
 
     public void alterarNome(String novoNome) {
+        if (this.nome.equals(novoNome)) return;
         validarNome(novoNome);
         this.nome = novoNome;
     }
 
     public void alterarEmail(String novoEmail) {
+        if (this.nome.equals(novoEmail)) return;
         validarEmail(novoEmail);
         this.email = Objects.requireNonNull(novoEmail);
     }
@@ -44,36 +50,35 @@ public class Usuario {
         this.admin = true;
     }
 
-    public void removerPrivilegiosAdmin() {
+    public void revogarAdmin() {
         this.admin = false;
     }
 
+    public void desativarUsuario() {
+        if (!this.ativo) {
+            throw new IllegalStateException("Usuário já está desativado.");
+        }
+        this.ativo = false;
+    }
 
-    protected void validarEmail (String email) {
+
+    private void validarEmail (String email) {
         Objects.requireNonNull(email, "O email não pode ser nulo");
 
         if ( !email.matches("^[A-Za-z0-9._-]+@[a-z0-9.-]+\\.[a-z]{2,}$") ) {
             throw new IllegalArgumentException("Formato de email inválido.");
         }
-
-        if ( email.equals(this.email) ) {
-            throw new IllegalArgumentException("O novo email deve ser diferente do email atual.");
-        }
     }
 
-    protected void validarNome(String nome) {
+    private void validarNome(String nome) {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if (nome.trim().length() < 3) {
             throw new IllegalArgumentException("O nome de usuário deve ter pelo menos 3 letras.");
         }
-
-        if (this.nome != null && this.nome.equals(nome)) {
-            throw new IllegalArgumentException("O novo nome deve ser diferente do atual.");
-        }
     }
 
-    protected void validarSenha(String senha) {
+    private void validarSenha(String senha) {
         Objects.requireNonNull(senha, "A senha não pode ser nula.");
 
         if ( senha.length() < 6 ) {
@@ -99,6 +104,14 @@ public class Usuario {
 
     public boolean isAdmin() {
         return admin;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public boolean isInativo() {
+        return !isAtivo();
     }
 
     @Override

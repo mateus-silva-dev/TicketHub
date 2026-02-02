@@ -1,6 +1,7 @@
-package br.com.mateus.tickethub.model;
+package br.com.mateus.tickethub.domain.local;
 
-import br.com.mateus.tickethub.model.exception.SetorNaoEncontradoException;
+import br.com.mateus.tickethub.infrastructure.shared.endereco.Endereco;
+import br.com.mateus.tickethub.domain.local.exception.SetorNaoEncontradoException;
 
 import java.util.*;
 
@@ -47,11 +48,11 @@ public class Local {
         return setores.stream()
                 .filter(s -> s.getId().equals(idSetor))
                 .findFirst()
-                .orElseThrow(() -> new SetorNaoEncontradoException("Setor não encontrado."));
+                .orElseThrow(() -> new SetorNaoEncontradoException(idSetor));
     }
 
 
-    protected void validarNome(String nome) {
+    private void validarNome(String nome) {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if (nome.trim().length() < 3) {
@@ -63,7 +64,7 @@ public class Local {
         }
     }
 
-    protected boolean verificarSetorExistente(Setor novoSetor) {
+    private boolean verificarSetorExistente(Setor novoSetor) {
         return setores.stream()
                 .anyMatch(setor -> setor.getNome().equalsIgnoreCase(novoSetor.getNome()));
     }

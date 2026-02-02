@@ -1,6 +1,4 @@
-package br.com.mateus.tickethub.repository;
-
-import br.com.mateus.tickethub.model.Setor;
+package br.com.mateus.tickethub.domain.local;
 
 import java.util.List;
 import java.util.Optional;

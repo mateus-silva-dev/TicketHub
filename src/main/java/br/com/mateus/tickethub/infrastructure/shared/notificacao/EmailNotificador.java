@@ -1,6 +1,6 @@
-package br.com.mateus.tickethub.service.notificacao;
+package br.com.mateus.tickethub.infrastructure.shared.notificacao;
 
-import br.com.mateus.tickethub.model.Usuario;
+import br.com.mateus.tickethub.domain.usuario.Usuario;
 
 public class EmailNotificador implements Notificador {
     @Override

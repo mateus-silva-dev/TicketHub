@@ -1,4 +1,4 @@
-package br.com.mateus.tickethub.model.enums;
+package br.com.mateus.tickethub.domain.evento;
 
 public enum StatusEvento {
         AGENDADO,

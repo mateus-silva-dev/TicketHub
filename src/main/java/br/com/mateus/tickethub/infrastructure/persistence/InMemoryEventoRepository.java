@@ -1,8 +1,8 @@
-package br.com.mateus.tickethub.repository.impl;
+package br.com.mateus.tickethub.infrastructure.persistence;
 
-import br.com.mateus.tickethub.model.Evento;
-import br.com.mateus.tickethub.model.enums.StatusEvento;
-import br.com.mateus.tickethub.repository.EventoRepository;
+import br.com.mateus.tickethub.domain.evento.Evento;
+import br.com.mateus.tickethub.domain.evento.StatusEvento;
+import br.com.mateus.tickethub.domain.evento.EventoRepository;
 
 import java.util.*;
 

@@ -1,7 +1,8 @@
-package br.com.mateus.tickethub.repository.impl;
+package br.com.mateus.tickethub.infrastructure.persistence;
 
-import br.com.mateus.tickethub.model.Usuario;
-import br.com.mateus.tickethub.repository.UsuarioRepository;
+import br.com.mateus.tickethub.domain.usuario.Usuario;
+import br.com.mateus.tickethub.domain.usuario.UsuarioRepository;
+import br.com.mateus.tickethub.domain.usuario.exception.UsuarioNaoEncontradoException;
 
 import java.util.*;
 
@@ -34,10 +35,4 @@ public class InMemoryUsuarioRepository implements UsuarioRepository {
     public List<Usuario> buscarTodos() {
         return Collections.unmodifiableList(usuarios);
     }
-
-    @Override
-    public void deletar(UUID id) {
-        usuarios.removeIf(usuario -> usuario.getId().equals(id));
-    }
-
 }

@@ -1,7 +1,7 @@
-package br.com.mateus.tickethub.repository.impl;
+package br.com.mateus.tickethub.infrastructure.persistence;
 
-import br.com.mateus.tickethub.model.Setor;
-import br.com.mateus.tickethub.repository.SetorRepository;
+import br.com.mateus.tickethub.domain.local.Setor;
+import br.com.mateus.tickethub.domain.local.SetorRepository;
 
 import java.util.*;
 

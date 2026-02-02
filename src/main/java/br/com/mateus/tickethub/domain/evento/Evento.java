@@ -1,7 +1,6 @@
-package br.com.mateus.tickethub.model;
+package br.com.mateus.tickethub.domain.evento;
 
-import br.com.mateus.tickethub.model.enums.StatusEvento;
-import br.com.mateus.tickethub.service.notificacao.Notificador;
+import br.com.mateus.tickethub.domain.local.Local;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -79,7 +78,7 @@ public class Evento {
     }
 
 
-    protected void validarNome(String nome) {
+    private void validarNome(String nome) {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if (nome.trim().length() < 3) {
@@ -91,7 +90,7 @@ public class Evento {
         }
     }
 
-    protected void validarDataRealizacao(LocalDateTime dataRealizacao) {
+    private void validarDataRealizacao(LocalDateTime dataRealizacao) {
         Objects.requireNonNull(dataRealizacao, "A data não pode ser nula");
 
         if ( dataRealizacao.isBefore(LocalDateTime.now()) ) {
@@ -103,7 +102,7 @@ public class Evento {
         }
     }
 
-    protected void validarDescricao(String descricao) {
+    private void validarDescricao(String descricao) {
         Objects.requireNonNull(descricao, "A descrição não pode ser nula");
 
         if (descricao.trim().length() < 10) {

@@ -1,4 +1,4 @@
-package br.com.mateus.tickethub.model.enums;
+package br.com.mateus.tickethub.domain.ingresso;
 
 public enum StatusIngresso {
     DISPONIVEL,     // Pode ser comprado

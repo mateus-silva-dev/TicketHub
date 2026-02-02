@@ -1,7 +1,6 @@
-package br.com.mateus.tickethub.service.endereco;
+package br.com.mateus.tickethub.infrastructure.shared.endereco;
 
 import br.com.mateus.tickethub.infrastructure.client.viacep.ViaCepClient;
-import br.com.mateus.tickethub.model.Endereco;
 import com.google.gson.Gson;
 
 public class EnderecoService {

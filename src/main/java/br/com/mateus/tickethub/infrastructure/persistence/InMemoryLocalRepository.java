@@ -1,7 +1,7 @@
-package br.com.mateus.tickethub.repository.impl;
+package br.com.mateus.tickethub.infrastructure.persistence;
 
-import br.com.mateus.tickethub.model.Local;
-import br.com.mateus.tickethub.repository.LocalRepository;
+import br.com.mateus.tickethub.domain.local.Local;
+import br.com.mateus.tickethub.domain.local.LocalRepository;
 
 import java.util.*;
 

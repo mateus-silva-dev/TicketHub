@@ -1,8 +1,8 @@
-package br.com.mateus.tickethub.repository.impl;
+package br.com.mateus.tickethub.infrastructure.persistence;
 
-import br.com.mateus.tickethub.model.Ingresso;
-import br.com.mateus.tickethub.model.enums.StatusIngresso;
-import br.com.mateus.tickethub.repository.IngressoRepository;
+import br.com.mateus.tickethub.domain.ingresso.Ingresso;
+import br.com.mateus.tickethub.domain.ingresso.StatusIngresso;
+import br.com.mateus.tickethub.domain.ingresso.IngressoRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,4 @@
-package br.com.mateus.tickethub.repository;
-
-import br.com.mateus.tickethub.model.Local;
-import br.com.mateus.tickethub.model.enums.StatusEvento;
+package br.com.mateus.tickethub.domain.local;
 
 import java.util.List;
 import java.util.Optional;
