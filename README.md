@@ -22,11 +22,21 @@ O projeto segue uma estrutura modular preparatória para Hexagonal/Clean Archite
 
 ```text
 src/main/java/br/com/mateus/tickethub
-├── application  # Ponto de entrada (Main/Menu)
-├── model        # Entidades e Regras de Negócio (Core)
-├── repository   # Persistência (In-Memory / JDBC)
-├── service      # Casos de Uso e Orquestração
-└── util         # Utilitários (Formatadores, Loggers)
+├── application
+│   └── MainTest.java        # Ponto de entrada
+│
+├── domain                   # Regras de negócio
+│   ├── evento
+│   ├── ingresso
+│   ├── local
+│   ├── usuario
+│   └── exception
+│
+├── infrastructure           # Detalhes técnicos
+│   ├── persistence          # InMemory repositories
+│   ├── client               # APIs externas (ViaCEP)
+│   └── shared               # Endereço, notificação, util
+
 ```
 
 ## 🛠️ Tecnologias Utilizadas
