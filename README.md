@@ -50,7 +50,7 @@ src/main/java/br/com/mateus/tickethub
 ## 🚦 Roadmap de Desenvolvimento
 
 * [x] Modelagem do Domínio (Local, Setor, Evento, Usuário)
-* [ ] Implementação de Repositórios In-Memory
+* [x] Implementação de Repositórios In-Memory
 * [ ] Lógica de Vendas e Controle de Estoque
 * [ ] Persistência em Arquivos (I/O)
 * [ ] Persistência em Banco de Dados (JDBC)
