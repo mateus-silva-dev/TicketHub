@@ -2,9 +2,10 @@ package br.com.mateus.tickethub.domain.usuario;
 
 import br.com.mateus.tickethub.domain.usuario.dto.AtualizarUsuarioDTO;
 import br.com.mateus.tickethub.domain.usuario.dto.CriarUsuarioDTO;
-import br.com.mateus.tickethub.domain.usuario.exception.EmailJaCadastradoException;
-import br.com.mateus.tickethub.domain.usuario.exception.UsuarioNaoEncontradoException;
+import br.com.mateus.tickethub.exception.EntidadeNaoEncontradaException;
+import br.com.mateus.tickethub.exception.DomainException;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UsuarioService {
@@ -26,13 +27,17 @@ public class UsuarioService {
     public void atualizar(UUID id, AtualizarUsuarioDTO usuarioDTO) {
         Usuario usuario = validarUsuarioExistente(id);
 
-        if ( usuarioDTO.nome() != null && !usuarioDTO.nome().isBlank() ) {
+        if ( usuarioDTO.nome() != null
+                && !usuarioDTO.nome().isBlank() ) {
             usuario.alterarNome(usuarioDTO.nome());
         }
-        if ( usuarioDTO.senha() != null && !usuarioDTO.senha().isBlank() ) {
+        if ( usuarioDTO.senha() != null
+                && !usuarioDTO.senha().isBlank() ) {
             usuario.alterarSenha(usuarioDTO.senha());
         }
-        if ( usuarioDTO.email() != null && !usuarioDTO.email().isBlank() ) {
+        if ( usuarioDTO.email() != null
+                && !usuarioDTO.email().isBlank()
+                && !usuarioDTO.email().equals(usuario.getEmail()) ) {
             validarUnicidadeEmail(usuarioDTO.email());
             usuario.alterarEmail(usuarioDTO.email());
         }
@@ -58,15 +63,25 @@ public class UsuarioService {
         repository.salvar(usuario);
     }
 
+    public List<Usuario> listarTodosUsuarios(UUID idUsuarioSolicitante) {
+        Usuario usuario = validarUsuarioExistente(idUsuarioSolicitante);
+
+        if ( !usuario.isAdmin() ) {
+            throw new DomainException("Apenas administradores podem listar usuários.");
+        }
+
+        return repository.buscarTodos();
+    }
+
 
     private void validarUnicidadeEmail(String email) {
         repository.buscarPorEmail(email).ifPresent(usuario -> {
-            throw new EmailJaCadastradoException(usuario.getEmail());
+            throw new DomainException("O e-mail informado já está em uso.");
         });
     }
 
     private Usuario validarUsuarioExistente(UUID id) {
         return repository.buscarPorId(id)
-                .orElseThrow(UsuarioNaoEncontradoException::new);
+            .orElseThrow(() -> new EntidadeNaoEncontradaException("Usuário não encontrado."));
     }
 }

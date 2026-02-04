@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface LocalRepository {
-    void salvar(Local local);
+    void cadastrar(Local local);
     Optional<Local> buscarPorId(UUID id);
     List<Local> buscarPorNome(String nome);
     List<Local> buscarTodos();

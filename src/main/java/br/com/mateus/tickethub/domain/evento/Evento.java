@@ -1,6 +1,8 @@
 package br.com.mateus.tickethub.domain.evento;
 
 import br.com.mateus.tickethub.domain.local.Local;
+import br.com.mateus.tickethub.exception.DomainException;
+import br.com.mateus.tickethub.exception.ValidacaoException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,11 +34,13 @@ public class Evento {
 
     public void alterarNome(String novoNome) {
         validarNome(novoNome);
+        if (this.nome.equals(novoNome)) return;
         this.nome = novoNome;
     }
 
     public void alterarDataRealizacao(LocalDateTime novoDataRealizacao) {
         validarDataRealizacao(novoDataRealizacao);
+        if (this.dataRealizacao.equals(novoDataRealizacao)) return;
         this.dataRealizacao = novoDataRealizacao;
     }
 
@@ -55,24 +59,24 @@ public class Evento {
 
     public void esgotar() {
         if (status != StatusEvento.ABERTO_PARA_VENDAS) {
-            throw new IllegalStateException("Somente eventos abertos podem ser esgotados.");
+            throw new DomainException("Somente eventos abertos podem ser esgotados.");
         }
         this.status = StatusEvento.ESGOTADO;
     }
 
     public void finalizar() {
         if (status == StatusEvento.CANCELADO) {
-            throw new IllegalStateException("Evento cancelado não pode ser finalizado.");
+            throw new DomainException("Evento cancelado não pode ser finalizado.");
         }
         if (dataRealizacao.isAfter(LocalDateTime.now())) {
-            throw new IllegalStateException("Evento só pode ser finalizado após a data.");
+            throw new DomainException("Evento só pode ser finalizado após a data.");
         }
         this.status = StatusEvento.FINALIZADO;
     }
 
     public void cancelar() {
         if (status == StatusEvento.FINALIZADO) {
-            throw new IllegalStateException("Evento já finalizado não pode ser cancelado.");
+            throw new DomainException("Evento já finalizado não pode ser cancelado.");
         }
         this.status = StatusEvento.CANCELADO;
     }
@@ -82,11 +86,7 @@ public class Evento {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if (nome.trim().length() < 3) {
-            throw new IllegalArgumentException("O nome do evento deve ter pelo menos 3 letras.");
-        }
-
-        if (this.nome != null && this.nome.equals(nome)) {
-            throw new IllegalArgumentException("O novo nome deve ser diferente do atual.");
+            throw new ValidacaoException("O nome do evento deve ter pelo menos 3 letras.");
         }
     }
 
@@ -94,11 +94,7 @@ public class Evento {
         Objects.requireNonNull(dataRealizacao, "A data não pode ser nula");
 
         if ( dataRealizacao.isBefore(LocalDateTime.now()) ) {
-            throw new IllegalArgumentException("A data do evento deve ser uma data futura.");
-        }
-
-        if (this.dataRealizacao != null && dataRealizacao.isEqual(this.dataRealizacao)) {
-            throw new IllegalArgumentException("A nova data deve ser diferente da atual.");
+            throw new ValidacaoException("A data do evento deve ser uma data futura.");
         }
     }
 
@@ -106,7 +102,7 @@ public class Evento {
         Objects.requireNonNull(descricao, "A descrição não pode ser nula");
 
         if (descricao.trim().length() < 10) {
-            throw new IllegalArgumentException("A descrição deve ser mais detalhada (mínimo 10 caracteres).");
+            throw new ValidacaoException("A descrição deve ser mais detalhada (mínimo 10 caracteres).");
         }
     }
 

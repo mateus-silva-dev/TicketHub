@@ -1,6 +1,7 @@
 package br.com.mateus.tickethub.domain.usuario;
 
-import br.com.mateus.tickethub.domain.usuario.exception.EmailJaCadastradoException;
+import br.com.mateus.tickethub.exception.DomainException;
+import br.com.mateus.tickethub.exception.ValidacaoException;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -30,14 +31,14 @@ public class Usuario {
 
 
     public void alterarNome(String novoNome) {
-        if (this.nome.equals(novoNome)) return;
         validarNome(novoNome);
+        if (this.nome.equals(novoNome)) return;
         this.nome = novoNome;
     }
 
     public void alterarEmail(String novoEmail) {
-        if (this.nome.equals(novoEmail)) return;
         validarEmail(novoEmail);
+        if (this.email.equals(novoEmail)) return;
         this.email = Objects.requireNonNull(novoEmail);
     }
 
@@ -56,25 +57,25 @@ public class Usuario {
 
     public void desativarUsuario() {
         if (!this.ativo) {
-            throw new IllegalStateException("Usuário já está desativado.");
+            throw new DomainException("Usuário já está desativado.");
         }
         this.ativo = false;
     }
 
 
-    private void validarEmail (String email) {
-        Objects.requireNonNull(email, "O email não pode ser nulo");
-
-        if ( !email.matches("^[A-Za-z0-9._-]+@[a-z0-9.-]+\\.[a-z]{2,}$") ) {
-            throw new IllegalArgumentException("Formato de email inválido.");
-        }
-    }
-
     private void validarNome(String nome) {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if (nome.trim().length() < 3) {
-            throw new IllegalArgumentException("O nome de usuário deve ter pelo menos 3 letras.");
+            throw new ValidacaoException("O nome de usuário deve ter pelo menos 3 letras.");
+        }
+    }
+
+    private void validarEmail (String email) {
+        Objects.requireNonNull(email, "O email não pode ser nulo");
+
+        if ( !email.matches("^[A-Za-z0-9._-]+@[a-z0-9.-]+\\.[a-z]{2,}$") ) {
+            throw new ValidacaoException("Formato de email inválido.");
         }
     }
 
@@ -82,7 +83,7 @@ public class Usuario {
         Objects.requireNonNull(senha, "A senha não pode ser nula.");
 
         if ( senha.length() < 6 ) {
-            throw new IllegalArgumentException("A senha deve ter pelo menos 6 caracteres.");
+            throw new ValidacaoException("A senha deve ter pelo menos 6 caracteres.");
         }
     }
 

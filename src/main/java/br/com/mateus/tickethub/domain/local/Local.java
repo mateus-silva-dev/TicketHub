@@ -1,7 +1,9 @@
 package br.com.mateus.tickethub.domain.local;
 
+import br.com.mateus.tickethub.exception.EntidadeEmConflitoException;
+import br.com.mateus.tickethub.exception.EntidadeNaoEncontradaException;
+import br.com.mateus.tickethub.exception.ValidacaoException;
 import br.com.mateus.tickethub.infrastructure.shared.endereco.Endereco;
-import br.com.mateus.tickethub.domain.local.exception.SetorNaoEncontradoException;
 
 import java.util.*;
 
@@ -23,6 +25,7 @@ public class Local {
 
     public void alterarNome(String novoNome) {
         validarNome(novoNome);
+        if (this.nome.equals(novoNome)) return;
         this.nome = novoNome;
     }
 
@@ -34,7 +37,7 @@ public class Local {
         Objects.requireNonNull(novoSetor);
 
         if ( verificarSetorExistente(novoSetor) ) {
-            throw new IllegalArgumentException("Já existe um setor com o nome '" + novoSetor.getNome() + "' neste local.");
+            throw new EntidadeEmConflitoException("Já existe um setor com o nome '" + novoSetor.getNome() + "' neste local.");
         }
 
         this.setores.add(novoSetor);
@@ -48,7 +51,7 @@ public class Local {
         return setores.stream()
                 .filter(s -> s.getId().equals(idSetor))
                 .findFirst()
-                .orElseThrow(() -> new SetorNaoEncontradoException(idSetor));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Setor não encontrado."));
     }
 
 
@@ -56,11 +59,7 @@ public class Local {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if (nome.trim().length() < 3) {
-            throw new IllegalArgumentException("O nome do local deve ter pelo menos 3 letras.");
-        }
-
-        if (this.nome != null && this.nome.equals(nome)) {
-            throw new IllegalArgumentException("O novo nome deve ser diferente do atual.");
+            throw new ValidacaoException("O nome do local deve ter pelo menos 3 letras.");
         }
     }
 

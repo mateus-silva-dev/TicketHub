@@ -4,6 +4,7 @@ import br.com.mateus.tickethub.domain.evento.Evento;
 import br.com.mateus.tickethub.domain.local.Setor;
 import br.com.mateus.tickethub.domain.usuario.Usuario;
 import br.com.mateus.tickethub.domain.evento.StatusEvento;
+import br.com.mateus.tickethub.exception.EntidadeEmConflitoException;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -31,11 +32,11 @@ public class Ingresso {
 
     public void reservar() {
         if (evento.getStatus() != StatusEvento.ABERTO_PARA_VENDAS) {
-            throw new IllegalStateException("Evento não está aberto para vendas.");
+            throw new EntidadeEmConflitoException("Evento não está aberto para vendas.");
         }
 
         if (status != StatusIngresso.DISPONIVEL) {
-            throw new IllegalStateException("Ingresso não disponível para reserva.");
+            throw new EntidadeEmConflitoException("Ingresso não disponível para reserva.");
         }
 
         this.status = StatusIngresso.RESERVADO;
@@ -43,7 +44,7 @@ public class Ingresso {
 
     public void confirmarPagamento(BigDecimal valorPago) {
         if (status != StatusIngresso.RESERVADO) {
-            throw new IllegalStateException("Ingresso não está reservado.");
+            throw new EntidadeEmConflitoException("Ingresso não está reservado.");
         }
 
         Objects.requireNonNull(valorPago, "O valor pago não pode ser nulo.");
@@ -54,7 +55,7 @@ public class Ingresso {
 
     public void expirar() {
         if (status != StatusIngresso.RESERVADO) {
-            throw new IllegalStateException("Somente ingressos reservados podem expirar.");
+            throw new EntidadeEmConflitoException("Somente ingressos reservados podem expirar.");
         }
 
         this.status = StatusIngresso.EXPIRADO;
@@ -62,7 +63,7 @@ public class Ingresso {
 
     public void utilizar() {
         if (status != StatusIngresso.VENDIDO) {
-            throw new IllegalStateException("Somente ingressos vendidos podem ser utilizados.");
+            throw new EntidadeEmConflitoException("Somente ingressos vendidos podem ser utilizados.");
         }
 
         this.status = StatusIngresso.UTILIZADO;
@@ -70,7 +71,7 @@ public class Ingresso {
 
     public void cancelar() {
         if (status == StatusIngresso.UTILIZADO) {
-            throw new IllegalStateException("Ingresso já utilizado não pode ser cancelado.");
+            throw new EntidadeEmConflitoException("Ingresso já utilizado não pode ser cancelado.");
         }
 
         this.status = StatusIngresso.CANCELADO;

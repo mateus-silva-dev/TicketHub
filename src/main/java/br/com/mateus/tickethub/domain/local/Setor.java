@@ -1,5 +1,7 @@
 package br.com.mateus.tickethub.domain.local;
 
+import br.com.mateus.tickethub.exception.ValidacaoException;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
@@ -25,6 +27,7 @@ public class Setor {
 
     public void alterarNome(String novoNome) {
         validarNome(novoNome);
+        if (this.nome.equals(novoNome)) return;
         this.nome = novoNome;
     }
 
@@ -35,6 +38,7 @@ public class Setor {
 
     public void alterarPrecoBase(BigDecimal novoPrecoBase) {
         validarPrecoBase(novoPrecoBase);
+        if (this.precoBase.compareTo(novoPrecoBase) == 0) return;
         this.precoBase = novoPrecoBase;
     }
 
@@ -43,21 +47,17 @@ public class Setor {
         Objects.requireNonNull(nome, "O nome não pode ser nulo.");
 
         if ( nome.trim().length() < 3 ) {
-            throw new IllegalArgumentException("O nome do local deve ter pelo menos 3 letras.");
-        }
-
-        if ( this.nome != null && this.nome.equals(nome) ) {
-            throw new IllegalArgumentException("O novo nome deve ser diferente do atual.");
+            throw new ValidacaoException("O nome do local deve ter pelo menos 3 letras.");
         }
     }
 
     private void validarCapacidade(int capacidade) {
         if ( capacidade <= 0 ) {
-            throw new IllegalArgumentException("O capacidade deve ser maior que 1.");
+            throw new ValidacaoException("O capacidade deve ser maior que 1.");
         }
 
         if (this.capacidade > 0 && this.capacidade == capacidade) {
-            throw new IllegalArgumentException("A nova capacidade deve ser diferente da atual.");
+            throw new ValidacaoException("A nova capacidade deve ser diferente da atual.");
         }
     }
 
@@ -65,11 +65,7 @@ public class Setor {
         Objects.requireNonNull(precoBase, "O preço base não pode ser nulo.");
 
         if (precoBase.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("O preço deve ser maior que zero.");
-        }
-
-        if (this.precoBase != null && this.precoBase.compareTo(precoBase) == 0) {
-            throw new IllegalArgumentException("O novo preço base deve ser diferente do preço atual.");
+            throw new ValidacaoException("O preço deve ser maior que zero.");
         }
     }
 

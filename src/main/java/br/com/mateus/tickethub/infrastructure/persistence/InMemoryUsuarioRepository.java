@@ -2,7 +2,6 @@ package br.com.mateus.tickethub.infrastructure.persistence;
 
 import br.com.mateus.tickethub.domain.usuario.Usuario;
 import br.com.mateus.tickethub.domain.usuario.UsuarioRepository;
-import br.com.mateus.tickethub.domain.usuario.exception.UsuarioNaoEncontradoException;
 
 import java.util.*;
 

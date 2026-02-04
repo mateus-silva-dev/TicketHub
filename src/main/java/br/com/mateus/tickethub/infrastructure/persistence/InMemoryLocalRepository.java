@@ -10,7 +10,7 @@ public class InMemoryLocalRepository implements LocalRepository {
     private final List<Local> locais = new ArrayList<>();
 
     @Override
-    public void salvar(Local local) {
+    public void cadastrar(Local local) {
         buscarPorId(local.getId()).ifPresent(locais::remove);
         locais.add(local);
     }
